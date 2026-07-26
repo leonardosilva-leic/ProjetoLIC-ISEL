@@ -129,4 +129,5 @@ software responsável pela lógica da aplicação.
 **Instituição:** Instituto Superior de Engenharia de Lisboa (ISEL)  
 **Curso:** Licenciatura em Engenharia Informática e de Computadores  
 **Unidade Curricular:** Laboratório de Informática e Computadores (LIC)  
-**Ano letivo:** 2025/2026
+**Ano letivo:** 2025/2026 2°Semestre
+
