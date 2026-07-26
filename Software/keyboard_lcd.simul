@@ -1,0 +1,45 @@
+## --- Additional packages with Hardware to Simulator
+package isel.leic.simul
+
+# Generic modules to activate from Simulator
+UsbPort = UsbPort
+kbd    = Keyboard("123A456B789C*0#D",4,4,0)
+lcd    = LCD
+td     = TicketDispenser
+sr_lcd = ShiftRegister(10)
+hr_lcd = Register(10)
+sr_td  = ShiftRegister(10)
+hr_td  = Register(10)
+inv1   = Not
+inv2   = Not
+
+# --------------------------------------
+# KeyBoard Reader
+# --------------------------------------
+1 -> kbd.oe
+kbd.val -> UsbPort.I4
+kbd.K[0-3] -> UsbPort.I[0-3]
+UsbPort.O0 -> kbd.ack
+
+# --------------------------------------
+# PE LCD
+# --------------------------------------
+UsbPort.O1 -> sr_lcd.in
+UsbPort.O2 -> sr_lcd.clk
+UsbPort.O3 -> inv1.in, hr_lcd.clk
+inv1.out -> sr_lcd.en
+sr_lcd.out[0-9] -> hr_lcd.in[0-9]
+hr_lcd.out[1-8] -> lcd.D[0-7]
+hr_lcd.out0 -> lcd.rs
+hr_lcd.out9 -> lcd.e
+
+# --------------------------------------
+# PE Ticket Dispenser
+# --------------------------------------
+UsbPort.O1 -> sr_td.in
+UsbPort.O2 -> sr_td.clk
+UsbPort.O5 -> inv2.in, hr_td.clk
+inv2.out -> sr_td.en
+sr_td.out[0-9] -> hr_td.in[0-9]
+hr_td.out[0-9] -> td.in[0-9]
+
